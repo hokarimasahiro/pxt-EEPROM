@@ -1,5 +1,5 @@
 /**
- * makecode S-24CMxxC EEPROM Package.
+ * makecode EEPROM Package.
  * From microbit/micropython Chinese community.
  * http://www.micropython.org.cn
  */
