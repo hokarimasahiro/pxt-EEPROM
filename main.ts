@@ -104,7 +104,7 @@ namespace EEPROM {
      * @param addr i2c address, eg: 0x50
      */
     //% blockId="setI2cAddress" block="i2c address set to %addr"
-    //% weight=79 blockGap=8
+    //% weight=70 blockGap=8
     export function setI2cAddress(addr: number): void {
         EEPROM_ADDR=addr
     }
