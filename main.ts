@@ -5,36 +5,38 @@
  */
 
 /**
- * S-24CMxxC block
+ * EEPROM block
  */
-//% weight=100 color=#303030 icon="\uf2db" block="S-24CMxxC"
-namespace S24CM01C {
-    let S_24CM01C_ADDR = 0x50;
+//% weight=100 color=#303030 icon="\uf2db" block="EEPROM"
+namespace EEPROM {
+    let EEPROM_ADDR = 0x50;
 
     /**
      * write a byte to special address
      * @param addr eeprom address, eg: 1
      * @param dat is the data will be write, eg: 5
      */
-    //% blockId="S24_WriteByte" block="eeprom address %addr|write byte %dat"
+    //% blockId="WriteByte" block="eeprom address %addr|write byte %dat"
     //% weight=100 blockGap=8
-    export function write_byte(addr: number, dat: number): void {
+    export function writeByte(addr: number, dat: number): void {
+        let address=EEPROM_ADDR + addr >>> 16
         let buf = pins.createBuffer(3);
         buf[0] = addr >> 8;
         buf[1] = addr;
         buf[2] = dat;
-        pins.i2cWriteBuffer(S_24CM01C_ADDR, buf)
+        pins.i2cWriteBuffer(address, buf)
     }
 
     /**
      * read a byte from special address
      * @param addr eeprom address, eg: 1
      */
-    //% blockId="S24_ReadByte" block="read byte from address %addr"
+    //% blockId="ReadByte" block="read byte from address %addr"
     //% weight=99 blockGap=8
-    export function read_byte(addr: number): number {
-        pins.i2cWriteNumber(S_24CM01C_ADDR, addr, NumberFormat.UInt16BE);
-        return pins.i2cReadNumber(S_24CM01C_ADDR, NumberFormat.UInt8BE);
+    export function readByte(addr: number): number {
+        let address = EEPROM_ADDR + addr >>> 16
+        pins.i2cWriteNumber(address, addr, NumberFormat.UInt16BE);
+        return pins.i2cReadNumber(address, NumberFormat.UInt8BE);
     }
 
     /**
@@ -42,26 +44,28 @@ namespace S24CM01C {
      * @param addr eeprom address, eg: 2
      * @param dat is the data will be write, eg: 6
      */
-    //% blockId="S24_WriteWord" block="eeprom address %addr|write word %dat"
+    //% blockId="WriteWord" block="eeprom address %addr|write word %dat"
     //% weight=90 blockGap=8
-    export function write_word(addr: number, dat: number): void {
+    export function writeWord(addr: number, dat: number): void {
+        let address = EEPROM_ADDR + addr >>> 16
         let buf = pins.createBuffer(4);
         buf[0] = addr >> 8;
         buf[1] = addr;
         buf[2] = dat >> 8;
         buf[3] = dat;
-        pins.i2cWriteBuffer(S_24CM01C_ADDR, buf)
+        pins.i2cWriteBuffer(address, buf)
     }
 
     /**
      * read a word from special address
      * @param addr eeprom address, eg: 2
      */
-    //% blockId="S24_ReadWord" block="read word from address %addr"
+    //% blockId="ReadWord" block="read word from address %addr"
     //% weight=89 blockGap=8
-    export function read_word(addr: number): number {
-        pins.i2cWriteNumber(S_24CM01C_ADDR, addr, NumberFormat.UInt16BE);
-        return pins.i2cReadNumber(S_24CM01C_ADDR, NumberFormat.UInt16BE);
+    export function readWord(addr: number): number {
+        let address = EEPROM_ADDR + addr >>> 16
+        pins.i2cWriteNumber(address, addr, NumberFormat.UInt16BE);
+        return pins.i2cReadNumber(address, NumberFormat.UInt16BE);
     }
 
     /**
@@ -69,9 +73,10 @@ namespace S24CM01C {
      * @param addr eeprom address, eg: 4
      * @param dat is the data will be write, eg: 7
      */
-    //% blockId="S24_WriteDWord" block="eeprom address %addr|write dword %dat"
+    //% blockId="WriteDWord" block="eeprom address %addr|write dword %dat"
     //% weight=80 blockGap=8
-    export function write_dword(addr: number, dat: number): void {
+    export function writeDword(addr: number, dat: number): void {
+        let address = EEPROM_ADDR + addr >>> 16
         let buf = pins.createBuffer(6);
         buf[0] = addr >> 8;
         buf[1] = addr;
@@ -79,17 +84,28 @@ namespace S24CM01C {
         buf[3] = dat >> 16;
         buf[4] = dat >> 8;
         buf[5] = dat;
-        pins.i2cWriteBuffer(S_24CM01C_ADDR, buf)
+        pins.i2cWriteBuffer(address, buf)
     }
 
     /**
      * read a dword from special address
      * @param addr eeprom address, eg: 4
      */
-    //% blockId="S24_ReadDWord" block="read dword from address %addr"
+    //% blockId="ReadDWord" block="read dword from address %addr"
     //% weight=79 blockGap=8
-    export function read_dword(addr: number): number {
-        pins.i2cWriteNumber(S_24CM01C_ADDR, addr, NumberFormat.UInt16BE);
-        return pins.i2cReadNumber(S_24CM01C_ADDR, NumberFormat.Int32BE);
+    export function readDword(addr: number): number {
+        let address = EEPROM_ADDR + addr >>> 16
+        pins.i2cWriteNumber(address, addr, NumberFormat.UInt16BE);
+        return pins.i2cReadNumber(address, NumberFormat.Int32BE);
+    }
+
+    /**
+     * set i2c address
+     * @param addr i2c address, eg: 0x50
+     */
+    //% blockId="setI2cAddress" block="i2c address set to %addr"
+    //% weight=79 blockGap=8
+    export function setI2cAddress(addr: number): void {
+        EEPROM_ADDR=addr
     }
 }
