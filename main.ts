@@ -1,7 +1,5 @@
 /**
  * makecode EEPROM Package.
- * From microbit/micropython Chinese community.
- * http://www.micropython.org.cn
  */
 
 /**
