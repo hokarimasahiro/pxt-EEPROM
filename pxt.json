@@ -1,5 +1,5 @@
 {
-    "name": "pxt-s24cm01c",
+    "name": "pxt-eeprom",
     "version": "0.0.0",
     "description": "",
     "dependencies": {
