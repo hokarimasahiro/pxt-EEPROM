@@ -17,7 +17,7 @@ namespace EEPROM {
     //% blockId="WriteByte" block="eeprom address %addr|write byte %dat"
     //% weight=100 blockGap=8
     export function writeByte(addr: number, dat: number): void {
-        let address = EEPROM_ADDR + (addr >>> 16)
+        let address = EEPROM_ADDR //+ (addr >>> 16)
         let buf = pins.createBuffer(3);
         buf[0] = addr >> 8;
         buf[1] = addr;
@@ -32,7 +32,7 @@ namespace EEPROM {
     //% blockId="ReadByte" block="read byte from address %addr"
     //% weight=99 blockGap=8
     export function readByte(addr: number): number {
-        let address = EEPROM_ADDR + (addr >>> 16)
+        let address = EEPROM_ADDR //+ (addr >>> 16)
         pins.i2cWriteNumber(address, addr, NumberFormat.UInt16BE);
         return pins.i2cReadNumber(address, NumberFormat.UInt8BE);
     }
@@ -45,7 +45,7 @@ namespace EEPROM {
     //% blockId="WriteWord" block="eeprom address %addr|write word %dat"
     //% weight=90 blockGap=8
     export function writeWord(addr: number, dat: number): void {
-        let address = EEPROM_ADDR + (addr >>> 16)
+        let address = EEPROM_ADDR //+ (addr >>> 16)
         let buf = pins.createBuffer(4);
         buf[0] = addr >> 8;
         buf[1] = addr;
@@ -61,7 +61,7 @@ namespace EEPROM {
     //% blockId="ReadWord" block="read word from address %addr"
     //% weight=89 blockGap=8
     export function readWord(addr: number): number {
-        let address = EEPROM_ADDR + (addr >>> 16)
+        let address = EEPROM_ADDR //+ (addr >>> 16)
         pins.i2cWriteNumber(address, addr, NumberFormat.UInt16BE);
         return pins.i2cReadNumber(address, NumberFormat.UInt16BE);
     }
