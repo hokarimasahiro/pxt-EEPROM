@@ -8,11 +8,14 @@
     },
     "files": [
         "README.md",
-        "main.ts"
+        "eeprom.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": false,
-    "installedVersion": "workspace:e086d751-b4d6-4d24-2201-8f07356892c4"
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj"
 }
