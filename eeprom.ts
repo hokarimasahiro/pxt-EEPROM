@@ -168,7 +168,7 @@ namespace EEPROM {
         pins.i2cWriteNumber(address, addr, NumberFormat.UInt16BE);
         let buf = pins.i2cReadBuffer(address, maxsize);
         for(let i=0;i<maxsize;i++){
-            if (buf[i]==0x00) break;
+            if (buf[i]==0x00 || buf[i]==0xff) break;
             retstr = retstr + String.fromCharCode(buf[i]);
         }
         return retstr;
