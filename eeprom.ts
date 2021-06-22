@@ -102,7 +102,7 @@ namespace EEPROM {
      * @param addr eeprom address, eg: 1
      * @param dat is the data will be write, eg: 5
      */
-    //% blockId="WriteBuf" block="eeprom address %addr|write buf %dat"
+    //% blockId="WriteBuf" block="eeprom address %addr|write multi %dat"
     //% weight=100 blockGap=8
     export function writeBuf(addr: number, dat: number[]): void {
         let address = EEPROM_ADDR + (addr >> 16)
@@ -120,7 +120,7 @@ namespace EEPROM {
      * @param addr eeprom address, eg: 1
      * @param size read data count, eg: 16
      */
-    //% blockId="ReadBuf" block="eeprom address %addr|read buf %size"
+    //% blockId="ReadBuf" block="read multi from eeprom address %addr|size %size"
     //% weight=100 blockGap=8
     export function readBuf(addr: number, size: number): number[] {
         let address = EEPROM_ADDR + (addr >> 16)
