@@ -159,7 +159,7 @@ namespace EEPROM {
      * @param addr eeprom address, eg: 1
      * @param maxsize read data count max, eg: 1024
      */
-    //% blockId="ReadStr" block="eeprom address %addr|read strings"
+    //% blockId="ReadStr" block="read strings from eeprom address %addr|maxsize %maxsize"
     //% weight=100 blockGap=8
     export function readStr(addr: number,maxsize:number): string {
         let address = EEPROM_ADDR + (addr >> 16)
