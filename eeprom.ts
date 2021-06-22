@@ -100,7 +100,7 @@ namespace EEPROM {
     /**
      * Write data to the specified address
      * @param addr eeprom address, eg: 1
-     * @param dat is the data will be write, eg: 5
+     * @param dat is the data will be write
      */
     //% blockId="WriteBuf" block="eeprom address %addr|write multi %dat"
     //% weight=100 blockGap=8
