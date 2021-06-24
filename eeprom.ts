@@ -106,11 +106,16 @@ namespace EEPROM {
     //% weight=100 blockGap=8
     export function writeBuf(addr: number, dat: number[]): void {
         let address = EEPROM_ADDR + (addr >> 16)
-        let buf = pins.createBuffer(dat.length + 2);
+        let buf = pins.createBuffer(256 + 2);
         buf[0] = addr >> 8;
         buf[1] = addr;
         for(let i=0;i<dat.length;i++){
-            buf[i + 2] = dat[i] & 0xff;
+            buf[(i % 256) + 2] = dat[i] & 0xff;
+            if (((addr + i) % 256) == 255){
+                pins.i2cWriteBuffer(address, buf);
+                buf[0]++;
+                buf[1] = 0;
+            }
         }
         pins.i2cWriteBuffer(address, buf)
     }
@@ -144,17 +149,18 @@ namespace EEPROM {
     //% weight=100 blockGap=8
     export function writeStr(addr: number, dat: string): void {
         let address = EEPROM_ADDR + (addr >> 16)
-        let buf = pins.createBuffer(dat.length + 3);
+        let buf = pins.createBuffer(256 + 2);
         buf[0] = addr >> 8;
         buf[1] = addr;
-serial.writeLine("len=" + dat.length);
-serial.writeLine("ad0=" + buf[0]);
-serial.writeLine("ad1=" + buf[1]);
         for(let i=0;i<dat.length;i++){
-            buf[i + 2] = dat.charCodeAt(i);
-serial.writeLine("ad" +i + ":"+ buf[i+2]);
+            buf[(i % 256) + 2] = dat.charCodeAt(i);
+            if (((addr + i) % 256)== 255){
+                pins.i2cWriteBuffer(address, buf);
+                buf[0]++;
+                buf[1] = 0;
+            }
         }
-        buf[dat.length + 2] = 0x00;
+        buf[(dat.length % 256) + 2] = 0x00;
         pins.i2cWriteBuffer(address, buf)
     }
 
