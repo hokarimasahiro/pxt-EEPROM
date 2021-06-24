@@ -154,9 +154,9 @@ serial.writeLine("" + addr + ":" + dat.length);
         buf[0] = addr >> 8;
         buf[1] = addr;
         for(let i=0;i<dat.length;i++){
-serial.writeLine("" + address + ":" + dat.length + buf[0] + ":" + buf[1] + buf[2]);
             buf[(i % 256) + 2] = dat.charCodeAt(i);
             if (((addr + i) % 256) == 255){
+serial.writeLine("" + address + ":" + dat.length + buf[0] + ":" + buf[1] + buf[2]);
                 pins.i2cWriteBuffer(address, buf);
                 buf[0]++;
                 buf[1] = 0;
