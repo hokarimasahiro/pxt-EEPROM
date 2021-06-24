@@ -154,9 +154,9 @@ namespace EEPROM {
         buf[1] = addr;
         for(let i=0;i<dat.length;i++){
             buf[(i % 256) + 2] = dat.charCodeAt(i);
-            if (((addr + i) % 256)== 255){
+            if (((addr + i) % 256) == 255){
                 pins.i2cWriteBuffer(address, buf);
-                buf[0]++;
+                buf[0]+=1;
                 buf[1] = 0;
             }
         }
