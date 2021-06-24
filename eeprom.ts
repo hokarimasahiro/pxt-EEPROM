@@ -147,6 +147,9 @@ namespace EEPROM {
         let buf = pins.createBuffer(dat.length + 3);
         buf[0] = addr >> 8;
         buf[1] = addr;
+serial.writeLine("len=" + dat.length);
+serial.writeLine("ad0=" + buf[0]);
+serial.writeLine("ad1=" + buf[1]);
         for(let i=0;i<dat.length;i++){
             buf[i + 2] = dat.charCodeAt(i);
         }
