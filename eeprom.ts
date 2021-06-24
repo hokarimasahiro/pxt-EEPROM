@@ -155,12 +155,14 @@ namespace EEPROM {
         for(let i=0;i<dat.length;i++){
             buf[(i % 256) + 2] = dat.charCodeAt(i);
             if (((addr + i) % 256) == 255){
+serial.writeLine("1" + buf[0] + " " + buf[1]);
                 pins.i2cWriteBuffer(address, buf);
                 buf[0]++;
                 buf[1] = 0;
             }
         }
         buf[(dat.length % 256) + 2] = 0x00;
+serial.writeLine("2" + buf[0] + " " + buf[1]);
         pins.i2cWriteBuffer(address, buf)
     }
 
