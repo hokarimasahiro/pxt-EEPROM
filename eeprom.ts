@@ -162,7 +162,7 @@ serial.writeLine("" + addr + ":" + dat.length);
                 for(let j=2;j<(256+2);j++) buf[j]=0x00;
             }
         }
-        buf[((dat.length - 1) % 256) + 2] = 0x00;
+        buf[(dat.length % 256) + 2] = 0x00;
         pins.i2cWriteBuffer(address, buf);
     }
 
