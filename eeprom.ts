@@ -148,6 +148,7 @@ namespace EEPROM {
     //% blockId="WriteStr" block="eeprom address %addr|write strings %dat"
     //% weight=100 blockGap=8
     export function writeStr(addr: number, dat: string): void {
+serial.writeLine("" + addr + ":" + dat.length);
         let address = EEPROM_ADDR + (addr >> 16)
         let buf = pins.createBuffer(256 + 2);
         buf[0] = addr >> 8;
