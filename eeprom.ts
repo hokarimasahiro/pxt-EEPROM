@@ -152,6 +152,7 @@ serial.writeLine("ad0=" + buf[0]);
 serial.writeLine("ad1=" + buf[1]);
         for(let i=0;i<dat.length;i++){
             buf[i + 2] = dat.charCodeAt(i);
+serial.writeLine("ad" +i + ":"+ buf[i+2]);
         }
         buf[dat.length + 2] = 0x00;
         pins.i2cWriteBuffer(address, buf)
