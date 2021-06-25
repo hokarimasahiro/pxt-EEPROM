@@ -164,7 +164,7 @@ serial.writeLine("1 " + addr + "," + dat.length + " " + buf[0] + ":" + buf[1] + 
             }
         }
         buf[(dat.length % pageSize) + 2] = 0x00;
-serial.writeLine("1 " + addr + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2])
+serial.writeLine("2 " + addr + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2])
         pins.i2cWriteBuffer(address, buf);
     }
 
