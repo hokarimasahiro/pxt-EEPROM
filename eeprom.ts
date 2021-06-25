@@ -158,7 +158,6 @@ namespace EEPROM {
             buf[(i % pageSize) + 2] = dat.charCodeAt(i);
             if (((addr + i) % pageSize) == (pageSize - 1)){
                 pins.i2cWriteBuffer(address, buf);
-serial.writeLine("1 " + address + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
                 buf[0] = (addr + i + 1) >> 8;
                 buf[1] = (addr + i + 1) >> 0;
                 for(j=2;j<(pageSize + 2);j++) buf[j]=0x00;
@@ -166,7 +165,6 @@ serial.writeLine("1 " + address + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
         }
         buf[(dat.length % pageSize) + 2] = 0x00;
         pins.i2cWriteBuffer(address, buf);
-serial.writeLine("2 " + address + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
     }
 
     /**
