@@ -149,7 +149,6 @@ namespace EEPROM {
     //% blockId="WriteStr" block="eeprom address %addr|write strings %dat"
     //% weight=100 blockGap=8
     export function writeStr(addr: number, dat: string): void {
-serial.writeLine("" + addr + ":" + dat.length);
         let address = EEPROM_ADDR + (addr >> 16)
         let buf = pins.createBuffer(pageSize + 2);
         buf[0] = addr >> 8;
@@ -157,7 +156,6 @@ serial.writeLine("" + addr + ":" + dat.length);
         for(let i=0;i<dat.length;i++){
             buf[(i % pageSize) + 2] = dat.charCodeAt(i);
             if (((addr + i) % pageSize) == (pageSize - 1)){
-serial.writeLine("" + address + "," + i + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
                 pins.i2cWriteBuffer(address, buf);
                 buf[0] = (addr + i + 1) >> 8;
                 buf[1] = (addr + i + 1) >> 0;
@@ -165,9 +163,7 @@ serial.writeLine("" + address + "," + i + " " + buf[0] + ":" + buf[1] + " " + bu
             }
         }
         buf[(dat.length % pageSize) + 2] = 0x00;
-serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
         pins.i2cWriteBuffer(address, buf);
-serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
     }
 
     /**
