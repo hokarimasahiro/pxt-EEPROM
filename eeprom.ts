@@ -8,6 +8,7 @@
 //% weight=100 color=#303030 icon="\uf2db" block="EEPROM"
 namespace EEPROM {
     let EEPROM_ADDR = 0x50;
+    let pageSize = 256;
 
     /**
      * Write byte data to the specified address
@@ -106,15 +107,15 @@ namespace EEPROM {
     //% weight=100 blockGap=8
     export function writeBuf(addr: number, dat: number[]): void {
         let address = EEPROM_ADDR + (addr >> 16)
-        let buf = pins.createBuffer(256 + 2);
+        let buf = pins.createBuffer(pageSize + 2);
         buf[0] = addr >> 8;
-        buf[1] = addr;
+        buf[1] = addr >> 0;
         for(let i=0;i<dat.length;i++){
-            buf[(i % 256) + 2] = dat[i] & 0xff;
-            if (((addr + i) % 256) == 255){
+            buf[(i % pageSize) + 2] = dat[i] & 0xff;
+            if (((addr + i) % pageSize) == (pageSize - 1)){
                 pins.i2cWriteBuffer(address, buf);
-                buf[0]++;
-                buf[1] = 0;
+                buf[0] = (addr + i + 1) >> 8;
+                buf[1] = (addr + i + 1) >> 0;
             }
         }
         pins.i2cWriteBuffer(address, buf)
@@ -150,20 +151,20 @@ namespace EEPROM {
     export function writeStr(addr: number, dat: string): void {
 serial.writeLine("" + addr + ":" + dat.length);
         let address = EEPROM_ADDR + (addr >> 16)
-        let buf = pins.createBuffer(256 + 2);
+        let buf = pins.createBuffer(pageSize + 2);
         buf[0] = addr >> 8;
-        buf[1] = addr;
+        buf[1] = addr >> 0;
         for(let i=0;i<dat.length;i++){
-            buf[(i % 128) + 2] = dat.charCodeAt(i);
-            if (((addr + i) % 128) == 127){
+            buf[(i % pageSize) + 2] = dat.charCodeAt(i);
+            if (((addr + i) % pageSize) == (pageSize - 1)){
 serial.writeLine("" + address + "," + i + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
                 pins.i2cWriteBuffer(address, buf);
-                buf[0]++;
-                buf[1] = 0;
-                for(let j=2;j<(256+2);j++) buf[j]=0x00;
+                buf[0] = (addr + i + 1) >> 8;
+                buf[1] = (addr + i + 1) >> 0;
+                for(let j=2;j<(pageSize + 2);j++) buf[j]=0x00;
             }
         }
-        buf[(dat.length % 128) + 2] = 0x00;
+        buf[(dat.length % pageSize) + 2] = 0x00;
 serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
         pins.i2cWriteBuffer(address, buf);
 serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
