@@ -154,8 +154,8 @@ serial.writeLine("" + addr + ":" + dat.length);
         buf[0] = addr >> 8;
         buf[1] = addr;
         for(let i=0;i<dat.length;i++){
-            buf[(i % 256) + 2] = dat.charCodeAt(i);
-            if (((addr + i) % 256) == 255){
+            buf[(i % 128) + 2] = dat.charCodeAt(i);
+            if (((addr + i) % 128) == 127){
 serial.writeLine("" + address + "," + i + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
                 pins.i2cWriteBuffer(address, buf);
                 buf[0]++;
@@ -163,7 +163,7 @@ serial.writeLine("" + address + "," + i + " " + buf[0] + ":" + buf[1] + " " + bu
                 for(let j=2;j<(256+2);j++) buf[j]=0x00;
             }
         }
-        buf[(dat.length % 256) + 2] = 0x00;
+        buf[(dat.length % 128) + 2] = 0x00;
 serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
         pins.i2cWriteBuffer(address, buf);
 serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
