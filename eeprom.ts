@@ -166,6 +166,7 @@ serial.writeLine("" + address + "," + i + " " + buf[0] + ":" + buf[1] + " " + bu
         buf[(dat.length % 256) + 2] = 0x00;
 serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
         pins.i2cWriteBuffer(address, buf);
+serial.writeLine("" + address + "," + dat.length + " " + buf[0] + ":" + buf[1] + " " + buf[2]);
     }
 
     /**
