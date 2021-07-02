@@ -154,16 +154,10 @@ namespace EEPROM {
         let i:number,j:number;
         buf[0] = addr >> 8;
         buf[1] = addr >> 0;
-        for(i=0;i<dat.length;i++){
-            buf[(i % pageSize) + 2] = dat.charCodeAt(i);
-            if (((addr + i) % pageSize) == (pageSize - 1)){
-                pins.i2cWriteBuffer(address, buf);
-                buf[0] = (addr + i + 1) >> 8;
-                buf[1] = (addr + i + 1) >> 0;
-                for(j=2;j<(pageSize + 2);j++) buf[j]=0x00;
-            }
+        for(i=0;i<pageSize;i++){
+            if (i < dat.length) buf[i + 2] = dat.charCodeAt(i);
+            else buf[i + 2] = 0x00;
         }
-        buf[(dat.length % pageSize) + 2] = 0x00;
         pins.i2cWriteBuffer(address, buf);
     }
 
